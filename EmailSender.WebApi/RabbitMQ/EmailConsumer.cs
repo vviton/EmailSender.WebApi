@@ -12,10 +12,13 @@ namespace EmailSender.WebApi.RabbitMQ
     {
         private readonly ConnectionFactory _factory;
         private readonly IEmailSendingService _emailSendingService;
+       
 
-        public EmailConsumer(string hostName, int portNumber)
+        public EmailConsumer(string hostName, int portNumber, IEmailSendingService emailSendingService)
         {
             _factory = new ConnectionFactory() { HostName = hostName, Port = portNumber };
+            _emailSendingService = emailSendingService;
+            StartConsuming();
         }
 
         public void StartConsuming()
